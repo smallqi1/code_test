@@ -1,0 +1,75 @@
+/* 统一加载动画样式 */
+:root {
+  --primary-color: #1890ff;
+  --primary-light: rgba(24, 144, 255, 0.1);
+  --bg-color: #f5f7fa;
+  --text-color: #252525;
+}
+
+/* 深色主题变量 */
+[data-theme="dark"],
+.dark-theme {
+  --primary-color: #177ddc;
+  --primary-light: rgba(23, 125, 220, 0.1);
+  --bg-color: #181818;
+  --text-color: #f0f0f0;
+}
+
+/* 加载容器样式 */
+.app-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  background-color: transparent;
+  transition: opacity 0.3s;
+}
+
+/* 加载动画容器 */
+.app-loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 加载文本 */
+.app-loading-text {
+  margin-top: 16px;
+  color: var(--primary-color);
+  font-size: 16px;
+  text-align: center;
+  min-width: 120px;
+}
+
+/* 加载旋转器 */
+.app-loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--primary-light);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: app-loading-spin 1s linear infinite;
+}
+
+/* 旋转动画 */
+@keyframes app-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 系统偏好深色模式检测 */
+@media (prefers-color-scheme: dark) {
+  body:not([data-theme="light"]):not(.light-theme) {
+    --primary-color: #177ddc;
+    --primary-light: rgba(23, 125, 220, 0.1);
+    --bg-color: #181818;
+    --text-color: #f0f0f0;
+  }
+} 

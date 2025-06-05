@@ -1,0 +1,14 @@
+/* 禁用按钮样式 */
+.tab-btn.disabled {
+  background-color: #f5f5f5 !important;
+  color: #999 !important;
+  border-color: #ddd !important;
+  cursor: not-allowed !important;
+  opacity: 0.6 !important;
+}
+
+.tab-btn.disabled:hover {
+  background-color: #f5f5f5 !important;
+  transform: none !important;
+  box-shadow: none !important;
+} 

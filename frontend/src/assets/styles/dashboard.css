@@ -1,0 +1,1020 @@
+.dashboard-container {
+  padding: 15px 24px 24px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+  animation: fadeIn 0.6s ease-out;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.dashboard-title {
+  text-align: left;
+  margin-bottom: 16px;
+  color: #263238;
+  font-size: 26px;
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+}
+
+.dashboard-title:after {
+  display: none;
+}
+
+.data-update-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  padding: 12px 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+}
+
+.update-time {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.time-label {
+  color: #606266;
+  margin-right: 8px;
+}
+
+.time-value {
+  color: #303133;
+  font-weight: 500;
+}
+
+.refresh-button {
+  padding: 8px;
+  transition: all 0.3s;
+}
+
+.refresh-button:hover {
+  background-color: #ecf5ff;
+  transform: rotate(30deg);
+}
+
+/* 优化卡片容器 */
+.card-container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.card-container:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #303133;
+  display: flex;
+  align-items: center;
+}
+
+.card-icon {
+  margin-right: 8px;
+  color: #409eff;
+}
+
+.map-container, .pollution-chart {
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
+  transition: all 0.3s;
+}
+
+.map-container:hover, .pollution-chart:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+  padding: 0;
+  position: relative;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 10px 16px 16px;
+  }
+  
+  .dashboard-title {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  
+  .data-update-info {
+    padding: 10px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .refresh-controls {
+    align-self: flex-end;
+  }
+}
+
+.dashboard-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dashboard-row {
+  width: 100%;
+}
+
+/* 地图和污染物排布样式 */
+.map-container, .pollution-chart {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+/* 优化地图头部样式 */
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.map-control-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+/* 调整地图高度 */
+.map-chart {
+  width: 100%;
+  height: 700px; /* 增加地图高度，从650px增加到700px */
+  position: relative;
+  overflow: hidden;
+}
+
+/* 城市排名和预警信息并排样式 */
+.dual-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* 在小屏幕上调整布局 */
+@media (max-width: 992px) {
+  .dual-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .header-controls {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  
+  .map-control-buttons {
+    margin-bottom: 5px;
+  }
+  
+  .map-chart {
+    height: 600px; /* 在平板上依然保持较大的高度，从500px增加到600px */
+  }
+}
+
+@media (max-width: 576px) {
+  .map-chart {
+    height: 450px; /* 在手机上适当减小，但依然比原来的400px大一些 */
+  }
+}
+
+/* 添加地图视觉效果 */
+.map-container {
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.map-container:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+.dashboard-main, .dashboard-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.map-container, .ranking-table, .pollution-chart, .alert-card {
+  transition: all 0.3s ease;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.map-container:hover, .ranking-table:hover, .pollution-chart:hover, .alert-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-icon {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+/* 表格样式优化 */
+.top-rank-row td {
+  background-color: rgba(82, 196, 26, 0.15) !important;
+  font-weight: bold;
+}
+
+.second-rank-row td {
+  background-color: rgba(24, 144, 255, 0.1) !important;
+}
+
+.third-rank-row td {
+  background-color: rgba(250, 173, 20, 0.1) !important;
+}
+
+/* 其它原有样式保留 */
+.error-message {
+  color: #F56C6C;
+  text-align: center;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.alert-list {
+  padding: 10px;
+}
+
+.alert-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  transition: all 0.3s;
+}
+
+.alert-item:hover {
+  background-color: #f0f0f0;
+  transform: translateX(5px);
+}
+
+.alert-item.unread {
+  border-left: 3px solid #409EFF;
+}
+
+.alert-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #e1f3d8;
+  color: #67C23A;
+  flex-shrink: 0;
+}
+
+.alert-warning {
+  background-color: #fdf6ec;
+  color: #E6A23C;
+}
+
+.alert-critical {
+  background-color: #fef0f0;
+  color: #F56C6C;
+}
+
+.alert-content {
+  flex: 1;
+  min-width: 0; /* 防止内容溢出 */
+}
+
+.alert-title {
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #303133;
+}
+
+.alert-message {
+  color: #606266;
+  font-size: 13px;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.alert-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #909399;
+}
+
+.empty-data {
+  padding: 30px 0;
+}
+
+.alert-loading {
+  padding: 20px;
+}
+
+/* 表格样式优化 */
+:deep(.el-table) {
+  font-size: 14px;
+}
+
+:deep(.el-table th) {
+  background-color: #f5f7fa;
+}
+
+:deep(.el-table--striped .el-table__body tr.el-table__row--striped td) {
+  background-color: #fafafa;
+}
+
+:deep(.el-table__row:hover > td) {
+  background-color: #ecf5ff !important;
+}
+
+/* AQI颜色标识 */
+:deep(.aqi-good) {
+  color: #79BC6A;
+}
+
+:deep(.aqi-moderate) {
+  color: #F7D74A;
+}
+
+:deep(.aqi-unhealthy) {
+  color: #F99D54;
+}
+
+:deep(.aqi-severe) {
+  color: #A97ABC;
+}
+
+/* 小屏幕适配 */
+@media (max-width: 1200px) {
+  .dashboard-layout {
+    grid-template-columns: 3fr 2fr; /* 在中等屏幕上稍微调整比例 */
+  }
+  
+  .map-chart {
+    height: 550px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr; /* 在小屏幕上改为单列 */
+  }
+  
+  .map-chart {
+    height: 500px;
+  }
+}
+
+@media (max-width: 576px) {
+  .map-chart {
+    height: 400px !important;
+  }
+  
+  .dashboard-container {
+    padding: 5px;
+  }
+  
+  .chart-container {
+    padding: 10px;
+  }
+  
+  :deep(.el-table) {
+    font-size: 12px;
+  }
+  
+  .card-header {
+    font-size: 14px;
+    padding: 10px;
+  }
+  
+  .alert-item {
+    padding: 8px;
+  }
+  
+  .alert-icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.el-pagination .el-input__inner {
+    -moz-appearance: textfield; /* 旧版 Firefox */
+    appearance: textfield; /* 现代浏览器 */
+}
+
+/* 添加骨架屏和加载状态样式 */
+.dashboard-loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent; /* 从rgba(0, 32, 77, 0.95)改为透明 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10001;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+.loading-spinner-container {
+  text-align: center;
+  padding: 35px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  max-width: 450px;
+  width: 90%;
+  position: relative;
+  overflow: hidden;
+  animation: slideInUp 0.5s ease-out;
+}
+
+.loading-spinner-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1890ff, #52c41a);
+  z-index: 1;
+}
+
+.loading-spinner {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 25px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #1890ff;
+  border-radius: 50%;
+  animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+}
+
+/* 骨架屏样式增强 */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.skeleton-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ebebeb;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-content {
+  flex: 1;
+}
+
+.skeleton-value {
+  height: 32px;
+  width: 60%;
+  margin-bottom: 6px;
+  background-color: #ebebeb;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-label {
+  height: 16px;
+  width: 80%;
+  background-color: #ebebeb;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-map {
+  height: 400px;
+  background-color: #ebebeb;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-legend {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.skeleton-legend-item {
+  height: 16px;
+  width: 50px;
+  background-color: #ebebeb;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.skeleton-cell {
+  height: 22px;
+  flex: 1;
+  background-color: #ebebeb;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-row .skeleton-cell {
+  height: 30px;
+  background-color: #e0e0e0;
+}
+
+.skeleton-chart {
+  height: 380px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.skeleton-bars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px 0;
+  gap: 20px;
+}
+
+.skeleton-bar {
+  height: 30px;
+  background-color: #ebebeb;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-axis {
+  height: 2px;
+  width: 100%;
+  background-color: #e0e0e0;
+  margin-top: 15px;
+}
+
+.skeleton-alert-item {
+  display: flex;
+  gap: 15px;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.skeleton-alert-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ebebeb;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-alert-content {
+  flex: 1;
+}
+
+.skeleton-alert-title {
+  height: 20px;
+  width: 70%;
+  background-color: #ebebeb;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-alert-message {
+  height: 16px;
+  width: 90%;
+  background-color: #ebebeb;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-alert-meta {
+  display: flex;
+  justify-content: space-between;
+}
+
+.skeleton-alert-city {
+  height: 14px;
+  width: 30%;
+  background-color: #ebebeb;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-alert-time {
+  height: 14px;
+  width: 40%;
+  background-color: #ebebeb;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 提升骨架屏动画效果 */
+.skeleton-icon::after,
+.skeleton-value::after,
+.skeleton-label::after,
+.skeleton-map::after,
+.skeleton-legend-item::after,
+.skeleton-cell::after,
+.skeleton-bar::after,
+.skeleton-axis::after,
+.skeleton-alert-icon::after,
+.skeleton-alert-title::after,
+.skeleton-alert-message::after,
+.skeleton-alert-city::after,
+.skeleton-alert-time::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+/* 修改动画 */
+@keyframes skeleton-loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from { 
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loading-text {
+  font-size: 20px;
+  margin-bottom: 25px;
+  color: #262626;
+  font-weight: 600;
+}
+
+.loading-tip {
+  font-size: 15px;
+  color: #666;
+  margin-top: 20px;
+  min-height: 24px;
+  animation: fadeIn 0.5s ease-in-out;
+  font-style: italic;
+}
+
+.loading-progress {
+  height: 8px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0 auto;
+  position: relative;
+}
+
+.loading-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #1890ff, #52c41a);
+  border-radius: 4px;
+  transition: width 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.loading-progress::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg, 
+    rgba(255, 255, 255, 0.1) 25%, 
+    rgba(255, 255, 255, 0.5) 50%, 
+    rgba(255, 255, 255, 0.1) 75%
+  );
+  animation: shimmer 2s infinite;
+  transform: translateX(-100%);
+}
+
+/* 添加淡入动画 */
+.dashboard-container {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* 地图控制按钮样式 */
+.map-controls {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+}
+
+.map-controls .el-button {
+  margin: 2px;
+}
+
+/* 优化地图容器样式 */
+.map-container {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* 修改选中城市的颜色，使其不那么刺眼 */
+.map-container :deep(.map-tooltip) {
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* 改进图例显示样式 */
+:deep(.echarts .ec-extension-visualMap) {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  padding: 8px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+:deep(.echarts .ec-extension-visualMap-text) {
+  font-weight: 500 !important;
+}
+
+/* 确保在不同分辨率下卡片样式一致 */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.dashboard-row {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* 确保地图容器的父级也有合适的尺寸 */
+:deep(.el-card__body) {
+  padding: 0;
+  overflow: hidden;
+}
+
+.map-container :deep(.el-card__body) {
+  height: calc(100% - 60px); /* 减去header高度 */
+}
+
+/* 添加淡入动画 */
+.dashboard-container {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* 优化地图容器样式，提高响应式表现 */
+#gdMap {
+  width: 100%;
+  height: 100%;
+  min-height: 500px; /* 增加最小高度，从450px增加到500px */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.map-container {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  transform-origin: center center;
+  min-height: 550px; /* 增加容器最小高度，从500px增加到550px */
+  width: 100%;
+  max-width: 100%;
+}
+
+.map-chart {
+  width: 100%;
+  height: 100%;
+  min-height: 450px; /* 确保地图有最小高度 */
+}
+
+/* 防止地图容器在动画过程中闪烁 */
+.map-container .echarts-container {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* 优化地图控件样式，确保在所有尺寸下位置合适 */
+.map-controls {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .map-controls {
+    right: 10px;
+    bottom: 10px;
+    gap: 5px;
+  }
+}
+
+.map-skeleton {
+  min-height: 380px;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  border-radius: 8px;
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+  padding: 20px;
+  position: relative;
+}
+
+/* 双栏布局设计 */
+.main-content-layout {
+  display: grid;
+  grid-template-columns: 3fr 1fr; /* 左侧占75%，右侧占25% */
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.content-main {
+  width: 100%;
+}
+
+.content-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 响应式调整 */
+@media (max-width: 1200px) {
+  .main-content-layout {
+    grid-template-columns: 2fr 1fr; /* 左侧占66%，右侧占33% */
+  }
+}
+
+@media (max-width: 992px) {
+  .main-content-layout {
+    grid-template-columns: 1fr; /* 单列布局 */
+  }
+}
+
+/* 为不同污染物的不同级别添加样式 */
+/* AQI级别样式保持不变 */
+.excellent { color: #00e400; font-weight: bold; }
+.good { color: #ffff00; font-weight: bold; }
+.moderate { color: #ff7e00; font-weight: bold; }
+.poor { color: #ff0000; font-weight: bold; }
+.bad { color: #99004c; font-weight: bold; }
+.severe { color: #7e0023; font-weight: bold; }
+
+/* PM2.5级别样式 */
+.level-pm25-i { color: #00e400; font-weight: bold; }
+.level-pm25-ii { color: #ffff00; font-weight: bold; }
+.level-pm25-iii { color: #ff7e00; font-weight: bold; }
+.level-pm25-iv { color: #ff0000; font-weight: bold; }
+.level-pm25-v { color: #99004c; font-weight: bold; }
+.level-pm25-vi { color: #7e0023; font-weight: bold; }
+
+/* PM10级别样式 */
+.level-pm10-i { color: #00e400; font-weight: bold; }
+.level-pm10-ii { color: #ffff00; font-weight: bold; }
+.level-pm10-iii { color: #ff7e00; font-weight: bold; }
+.level-pm10-iv { color: #ff0000; font-weight: bold; }
+.level-pm10-v { color: #99004c; font-weight: bold; }
+.level-pm10-vi { color: #7e0023; font-weight: bold; }
+
+/* SO2级别样式 */
+.level-so2-i { color: #00e400; font-weight: bold; }
+.level-so2-ii { color: #ffff00; font-weight: bold; }
+.level-so2-iii { color: #ff7e00; font-weight: bold; }
+.level-so2-iv { color: #ff0000; font-weight: bold; }
+.level-so2-v { color: #99004c; font-weight: bold; }
+.level-so2-vi { color: #7e0023; font-weight: bold; }
+
+/* NO2级别样式 */
+.level-no2-i { color: #00e400; font-weight: bold; }
+.level-no2-ii { color: #ffff00; font-weight: bold; }
+.level-no2-iii { color: #ff7e00; font-weight: bold; }
+.level-no2-iv { color: #ff0000; font-weight: bold; }
+.level-no2-v { color: #99004c; font-weight: bold; }
+.level-no2-vi { color: #7e0023; font-weight: bold; }
+
+/* O3级别样式 */
+.level-o3-i { color: #00e400; font-weight: bold; }
+.level-o3-ii { color: #ffff00; font-weight: bold; }
+.level-o3-iii { color: #ff7e00; font-weight: bold; }
+.level-o3-iv { color: #ff0000; font-weight: bold; }
+.level-o3-v { color: #99004c; font-weight: bold; }
+.level-o3-vi { color: #7e0023; font-weight: bold; }
+
+/* CO级别样式 */
+.level-co-i { color: #00e400; font-weight: bold; }
+.level-co-ii { color: #ffff00; font-weight: bold; }
+.level-co-iii { color: #ff7e00; font-weight: bold; }
+.level-co-iv { color: #ff0000; font-weight: bold; }
+.level-co-v { color: #99004c; font-weight: bold; }
+.level-co-vi { color: #7e0023; font-weight: bold; }

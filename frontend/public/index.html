@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>广东省空气质量预测系统</title>
+    
+    <!-- 提前加载Material Design Icons，防止CDN加载失败 -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"></noscript>
+    
+    <!-- Material Design Icons加载错误处理 -->
+    <script>
+      // 检测MDI样式加载失败并提供备用方案
+      function checkMDILoading() {
+        setTimeout(function() {
+          // 检查是否已成功加载
+          if (!document.querySelector('link[href*="materialdesignicons"]') || 
+              !Array.from(document.styleSheets).some(sheet => 
+                sheet.href && sheet.href.includes('materialdesignicons'))) {
+            console.warn('MDI 样式似乎加载失败，使用备用CDN');
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://unpkg.com/@mdi/font@latest/css/materialdesignicons.min.css';
+            document.head.appendChild(link);
+          }
+        }, 3000);
+      }
+      
+      // 页面加载完成后检查
+      window.addEventListener('DOMContentLoaded', checkMDILoading);
+    </script>
+    
+    <!-- 直接同步加载Chart.js和适配器 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        console.log('页面加载完成，Chart.js状态:', !!window.Chart);
+        
+        // 全局状态标记
+        window.ChartJsStatus = {
+          loaded: true,
+          adapterLoaded: true
+        };
+        
+        // 确保适配器配置正确
+        if (window.Chart && window.Chart.defaults) {
+          console.log('Chart.js配置:');
+          console.log('- 适配器存在:', !!window.Chart.defaults.adapters);
+          console.log('- 日期适配器存在:', !!(window.Chart.defaults.adapters && window.Chart.defaults.adapters.date));
+          
+          // 手动设置适配器
+          if (!window.Chart.defaults.adapters) {
+            window.Chart.defaults.adapters = {};
+          }
+          
+          if (!window.Chart.defaults.adapters.date) {
+            window.Chart.defaults.adapters.date = {};
+          }
+          
+          console.log('已初始化Chart.js适配器');
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <strong>很抱歉，这个应用需要启用JavaScript才能运行。请启用JavaScript后再试。</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html> 

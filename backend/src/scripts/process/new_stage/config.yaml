@@ -1,0 +1,215 @@
+# 项目配置文件
+# 注意：此配置文件已弃用，请使用 .env 文件进行配置
+
+# 数据库配置 (现在应从环境变量加载)
+database:
+  host: localhost
+  user: root
+  password: ${DB_PASSWORD}  # 从环境变量加载
+  database: air_quality_monitoring
+  port: 3306
+
+# 项目根路径 (现在应从环境变量加载)
+project_root: ${PROJECT_ROOT}  # 从环境变量加载
+
+# 数据目录配置 (现在基于PROJECT_ROOT)
+data_dirs:
+  download: ${PROJECT_ROOT}/data/new_data/raw_data
+  processed: ${PROJECT_ROOT}/data/new_data/processed_newdata
+  logs: ${PROJECT_ROOT}/backend/logs
+  backup: ${PROJECT_ROOT}/data/new_data/backup
+
+# API配置
+qweather_api:
+  key: ${QWEATHER_API_KEY}  # 从环境变量加载
+  
+# 城市列表
+cities:
+  - name: "广州市"
+    id: "440100"
+  - name: "韶关市"
+    id: "440200"
+  - name: "深圳市"
+    id: "440300"
+  - name: "珠海市"
+    id: "440400"
+  - name: "汕头市"
+    id: "440500"
+  - name: "佛山市"
+    id: "440600"
+  - name: "江门市"
+    id: "440700"
+  - name: "湛江市"
+    id: "440800"
+  - name: "茂名市"
+    id: "440900"
+  - name: "肇庆市"
+    id: "441200"
+  - name: "惠州市"
+    id: "441300"
+  - name: "梅州市"
+    id: "441400"
+  - name: "汕尾市"
+    id: "441500"
+  - name: "河源市"
+    id: "441600"
+  - name: "阳江市"
+    id: "441700"
+  - name: "清远市"
+    id: "441800"
+  - name: "东莞市"
+    id: "441900"
+  - name: "中山市"
+    id: "442000"
+  - name: "潮州市"
+    id: "445100"
+  - name: "揭阳市"
+    id: "445200"
+  - name: "云浮市"
+    id: "445300"
+
+# 日志配置
+logging:
+  filename: air_quality_data_process.log
+  level: INFO
+  max_bytes: 10485760  # 10MB
+  backup_count: 5
+
+# 下载配置
+download:
+  retry_attempts: 3
+  retry_delay: 5  # 秒
+  timeout: 30  # 秒
+
+# 调试模式
+debug: true
+
+# 保存CSV文件
+save_csv: true
+
+# 处理设置
+processing:
+  chunk_size: 5000  # 每次处理的行数
+  max_workers: 4  # 并行处理线程数
+  batch_size: 1000  # 每批插入数据库的记录数
+
+# AQI等级
+aqi_levels:
+  excellent:
+    description: 优
+    min: 0
+    max: 50
+  good:
+    description: 良
+    min: 51
+    max: 100
+  light_pollution:
+    description: 轻度污染
+    min: 101
+    max: 150
+  moderate_pollution:
+    description: 中度污染
+    min: 151
+    max: 200
+  heavy_pollution:
+    description: 重度污染
+    min: 201
+    max: 300
+  severe_pollution:
+    description: 严重污染
+    min: 301
+    max: 500
+
+# 数据库表定义
+tables:
+  air_quality_data:
+    description: 历史空气质量数据表
+    columns:
+      - name: id
+        type: INT AUTO_INCREMENT PRIMARY KEY
+      - name: city
+        type: VARCHAR(50) NOT NULL
+      - name: province
+        type: VARCHAR(50) NOT NULL
+      - name: record_date
+        type: DATE NOT NULL
+      - name: aqi_index
+        type: FLOAT
+      - name: quality_level
+        type: VARCHAR(20)
+      - name: aqi_rank
+        type: FLOAT
+      - name: pm25_avg
+        type: FLOAT
+      - name: pm10_avg
+        type: FLOAT
+      - name: so2_avg
+        type: FLOAT
+      - name: no2_avg
+        type: FLOAT
+      - name: co_avg
+        type: FLOAT
+      - name: o3_avg
+        type: FLOAT
+      - name: data_year
+        type: INT
+      - name: created_at
+        type: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    indexes:
+      - name: uc_city_date
+        type: UNIQUE KEY
+        columns: [city, record_date]
+  
+  air_quality_newdata:
+    description: 新的空气质量数据表
+    columns:
+      - name: id
+        type: INT AUTO_INCREMENT PRIMARY KEY
+      - name: city
+        type: VARCHAR(50) NOT NULL
+      - name: province
+        type: VARCHAR(50) NOT NULL
+      - name: record_date
+        type: DATE NOT NULL
+      - name: aqi_index
+        type: FLOAT
+      - name: quality_level
+        type: VARCHAR(20)
+      - name: aqi_rank
+        type: FLOAT
+      - name: pm25_avg
+        type: FLOAT
+      - name: pm10_avg
+        type: FLOAT
+      - name: so2_avg
+        type: FLOAT
+      - name: no2_avg
+        type: FLOAT
+      - name: co_avg
+        type: FLOAT
+      - name: o3_avg
+        type: FLOAT
+      - name: data_year
+        type: INT
+      - name: created_at
+        type: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    indexes:
+      - name: uc_city_date
+        type: UNIQUE KEY
+        columns: [city, record_date]
+      
+  import_logs:
+    description: 导入日志表
+    columns:
+      - name: id
+        type: INT AUTO_INCREMENT PRIMARY KEY
+      - name: filename
+        type: VARCHAR(255) NOT NULL
+      - name: records_count
+        type: INT NOT NULL
+      - name: import_date
+        type: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      - name: status
+        type: VARCHAR(20)
+      - name: message
+        type: TEXT 

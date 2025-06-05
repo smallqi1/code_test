@@ -1,0 +1,73 @@
+/* 报告样式覆盖 */
+body {
+  font-family: "Microsoft YaHei", Arial, sans-serif !important;
+  line-height: 1.6 !important;
+  color: #333 !important;
+}
+
+table {
+  border-collapse: collapse !important;
+  width: 100% !important;
+  margin-bottom: 20px !important;
+  table-layout: fixed !important;
+}
+
+th, td {
+  border: 1px solid #ddd !important;
+  padding: 8px !important;
+  text-align: center !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+th {
+  background-color: #f2f2f2 !important;
+  font-weight: bold !important;
+}
+
+/* 防止文本重叠 */
+p, div, span, h1, h2, h3, h4, h5, h6 {
+  line-height: 1.6 !important;
+  margin-bottom: 10px !important;
+}
+
+/* 页面打印样式 */
+@media print {
+  body {
+    font-family: "Microsoft YaHei", Arial, sans-serif !important;
+    line-height: 1.6 !important;
+    color: #000 !important;
+  }
+  
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+    margin-bottom: 15px !important;
+    page-break-inside: avoid !important;
+    table-layout: fixed !important;
+  }
+  
+  th, td {
+    border: 1px solid #000 !important;
+    padding: 8px !important;
+    text-align: left !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  
+  th {
+    background-color: #f2f2f2 !important;
+    font-weight: bold !important;
+  }
+  
+  h1, h2, h3 {
+    margin-top: 20px !important;
+    margin-bottom: 10px !important;
+    line-height: 1.4 !important;
+    page-break-after: avoid !important;
+  }
+  
+  p {
+    margin-bottom: 10px !important;
+  }
+} 

@@ -1,0 +1,80 @@
+/* CSS 警告修复文件 */
+
+/* 修复 -moz-appearance 不被 Chrome 支持的问题 */
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+  -webkit-appearance: textfield; /* Safari, Chrome, Edge < 84 */
+  appearance: textfield; /* 标准属性，支持 Chrome 84+, Edge 84+ */
+}
+
+/* 修复 scrollbar-width 不被 Safari 支持的问题 */
+.scrollbar-hidden {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none; /* Safari, Chrome */
+}
+
+/* 修复 mask 相关属性顺序问题 */
+.icon-with-mask {
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask: url("data:image/svg+xml;utf8,...") no-repeat;
+  mask: url("data:image/svg+xml;utf8,...") no-repeat;
+}
+
+/* 修复 filter 应该在 -ms-filter 之后列出的问题 */
+.filtered-element {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE8 */
+  filter: alpha(opacity=50); /* 标准 */
+}
+
+/* 解决一些常见的性能问题 */
+/* 使用transform代替left以提高性能 */
+.optimized-animation {
+  transform: translateX(0);
+  transition: transform 0.3s ease; 
+  will-change: transform; /* 提示浏览器该元素将被频繁变换 */
+}
+.optimized-animation:hover {
+  transform: translateX(10px);
+}
+
+/* mask-size属性顺序修复，应该在-webkit-mask-size之后 */
+.mask-fix {
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+/* mask属性顺序修复，应该在-webkit-mask之后 */
+.mask-property-fix {
+  -webkit-mask: url("data:image/svg+xml;utf8,...") no-repeat;
+  mask: url("data:image/svg+xml;utf8,...") no-repeat;
+}
+
+/* 修复表单字段缺少 id 或 name 属性的问题 */
+/* 注意：这是一个提醒，实际上需要在HTML中为每个表单字段添加id或name属性 */
+
+/* 全局元素选择器 - 应用到Element Plus组件 */
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.is-disabled::after {
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask: inherit;
+  mask: inherit;
+}
+
+[class^="el-icon-"], 
+[class*=" el-icon-"] {
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask: inherit;
+  mask: inherit;
+}
+
+.el-pagination .el-input__inner,
+.el-input-number .el-input__inner {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+} 

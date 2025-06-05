@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广东省空气质量监测系统</title>
+    <meta name="description" content="广东省21个地级市空气质量实时监测与预测系统">
+    <!-- DNS预解析和连接预建立 -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <!-- 资源缓存策略 -->
+    <meta http-equiv="Cache-Control" content="max-age=86400">
+    <!-- 导入共享加载样式 -->
+    <link rel="stylesheet" href="/loading.css">
+    <!-- 基础页面样式 -->
+    <style>
+      body{margin:0;padding:0;font-family:'Avenir','Helvetica','Arial',sans-serif;background-color:#ffffff}
+      #app{height:100vh;width:100vw}
+    </style>
+    <!-- 预加载重要资源 -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" as="style" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" rel="stylesheet" crossorigin>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 初始加载容器 - 使用统一的样式类名 -->
+      <div id="app-loading" class="app-loading">
+        <div class="app-loading-content">
+          <div class="app-loading-spinner"></div>
+          <div class="app-loading-text">广东省空气质量监测系统</div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // 主题检测与应用 - 使用与Vue应用相同的存储键和逻辑
+      function applyInitialTheme() {
+        try {
+          // 总是使用亮色主题，忽略本地存储和系统主题设置
+          const isDarkTheme = false;
+          
+          // 设置HTML属性,方便CSS直接使用
+          document.documentElement.setAttribute('data-theme', 'light');
+          // 同时保留类名方式，与App.vue保持一致
+          document.documentElement.classList.add('light-theme');
+          document.documentElement.classList.remove('dark-theme');
+          
+          // 将主题信息存储到window对象，供Vue应用初始化时使用
+          window.__initialTheme = 'light';
+        } catch (e) {
+          // 出错时使用默认亮色主题
+          document.documentElement.classList.add('light-theme');
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      }
+      
+      // 应用初始主题
+      applyInitialTheme();
+      
+      // 全局应用状态
+      window.AppState = {
+        // 预加载的资源记录
+        preloadedResources: new Set(),
+        // 加载状态
+        loading: true,
+        // 路由状态
+        currentRoute: null,
+        // 注册预加载资源
+        registerPreloadedResource(url) {
+          if (!this.preloadedResources.has(url)) {
+            this.preloadedResources.add(url);
+            // 触发资源预加载事件
+            window.dispatchEvent(new CustomEvent('app:state', { 
+              detail: { 
+                resourcePreloaded: url 
+              } 
+            }));
+          }
+        },
+        // 检查资源是否已预加载
+        isResourcePreloaded(url) {
+          return this.preloadedResources.has(url);
+        },
+        // 检查多个资源是否都已预加载
+        areResourcesPreloaded(urls) {
+          if (!urls || !urls.length) return true;
+          return urls.every(url => this.isResourcePreloaded(url));
+        },
+        // 初始化预加载资源列表
+        initPreloadResources() {
+          document.querySelectorAll('link[rel="preload"]').forEach(link => {
+            if (link.href) this.registerPreloadedResource(link.href);
+          });
+        }
+      };
+      
+      // 初始化预加载资源记录
+      window.AppState.initPreloadResources();
+      
+      // 处理加载状态
+      function setupLoadingHandler() {
+        const loader = document.getElementById('app-loading');
+        if (!loader) return;
+        
+        // 标记初始加载状态到全局状态
+        window.AppState.loading = true;
+        
+        // 移除加载器的函数
+        const removeInitialLoader = () => {
+          if (!loader || !loader.parentNode) return;
+          
+          // 设置过渡来平滑移除
+          loader.style.opacity = '0';
+          setTimeout(() => {
+            if (loader.parentNode) {
+              loader.parentNode.removeChild(loader);
+              window.AppState.loading = false;
+            }
+          }, 300);
+        };
+        
+        // 简化事件处理，使用统一的app:state事件
+        window.addEventListener('app:state', (event) => {
+          if (event.detail && event.detail.ready) {
+            removeInitialLoader();
+          }
+        });
+        
+        // 超时处理：最长等待2秒
+        setTimeout(() => {
+          removeInitialLoader();
+        }, 2000);
+      }
+      
+      // DOM加载完成后设置加载处理
+      document.addEventListener('DOMContentLoaded', setupLoadingHandler);
+    </script>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html> 
