@@ -145,11 +145,6 @@
 │   │   └── app.py               # Flask应用入口
 │   ├── logs/                    # 日志文件
 │   └── requirements.txt         # Python依赖包
-│
-└── data/                        # 数据目录
-    ├── models/                  # 模型文件存储
-    └── air_data/                # 空气质量数据
-```
 
 ## 数据库设计
 
